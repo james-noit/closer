@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.closer.CloserApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.617 s -- in com.closer.CloserApplicationTests

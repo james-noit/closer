@@ -1,0 +1,42 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: false
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: test-google-client-id
+            client-secret: test-google-client-secret
+            scope: email, profile
+          github:
+            client-id: test-github-client-id
+            client-secret: test-github-client-secret
+            scope: user:email
+  mail:
+    host: localhost
+    port: 25
+    username:
+    password:
+
+app:
+  jwt:
+    secret: dGVzdFNlY3JldEtleVRoYXRJc0F0TGVhc3QyNTZCaXRzTG9uZ0ZvckhTMjU2QWxnb3JpdGht
+    expiration: 86400000
+    refresh-expiration: 604800000
+  contact:
+    max-limit: 150
+    inactive-months: 6
+  frontend-url: http://localhost:4200
