@@ -1,0 +1,26 @@
+<div class="conversations-container">
+  <h2>Messages</h2>
+
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+  <mat-list *ngIf="!loading">
+    <mat-list-item *ngFor="let conv of conversations" class="conversation-item" (click)="openConversation(conv.contactId)">
+      <div class="conv-avatar">{{ conv.contactName.charAt(0) }}</div>
+      <div class="conv-info">
+        <div class="conv-name">
+          {{ conv.contactName }}
+          <span class="unread-badge" *ngIf="conv.unreadCount > 0">{{ conv.unreadCount }}</span>
+        </div>
+        <div class="conv-last-msg">{{ conv.lastMessage }}</div>
+        <div class="conv-time">{{ conv.lastMessageAt | date:'short' }}</div>
+      </div>
+      <mat-divider></mat-divider>
+    </mat-list-item>
+    <div *ngIf="conversations.length === 0" class="empty-state">
+      <mat-icon>chat_bubble_outline</mat-icon>
+      <p>No conversations yet</p>
+    </div>
+  </mat-list>
+</div>

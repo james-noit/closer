@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>Import Contacts</h2>
+
+<mat-dialog-content>
+  <p class="import-hint">Paste your contacts below (one per line, format: Name, Email, Phone)</p>
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Contact Data</mat-label>
+    <textarea matInput [(ngModel)]="importData" rows="10"
+      placeholder="Alice Johnson, alice@example.com, +1234567890&#10;Bob Smith, bob@example.com"></textarea>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onImport()" [disabled]="loading || !importData.trim()">
+    Import Contacts
+  </button>
+</mat-dialog-actions>

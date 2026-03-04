@@ -1,0 +1,25 @@
+<div class="conversation-container">
+  <div class="conv-header">
+    <button mat-icon-button routerLink="/messages"><mat-icon>arrow_back</mat-icon></button>
+    <h3>Conversation</h3>
+  </div>
+
+  <div class="messages-area" *ngIf="!loading">
+    <div *ngFor="let msg of messages" class="message-bubble-wrapper" [class.my-message]="isMyMessage(msg)">
+      <div class="message-bubble" [class.sent]="isMyMessage(msg)" [class.received]="!isMyMessage(msg)">
+        <p>{{ msg.content }}</p>
+        <span class="msg-time">{{ msg.createdAt | date:'shortTime' }}</span>
+      </div>
+    </div>
+    <div #messagesEnd></div>
+  </div>
+
+  <div class="message-input">
+    <mat-form-field appearance="outline" class="input-field">
+      <input matInput [(ngModel)]="newMessage" placeholder="Type a message..." (keyup.enter)="sendMessage()" />
+    </mat-form-field>
+    <button mat-icon-button color="primary" (click)="sendMessage()" [disabled]="!newMessage.trim()">
+      <mat-icon>send</mat-icon>
+    </button>
+  </div>
+</div>

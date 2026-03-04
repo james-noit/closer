@@ -6,14 +6,25 @@
 /e2e/test-output/
 /.angular/
 .angular/
+**/dist/
+**/.angular/
+**/out-tsc/
 
 # Node modules and dependency files
 /node_modules/
 /package-lock.json
 /yarn.lock
+**/node_modules/
+
+# Maven / Spring Boot build artifacts
+**/target/
+*.jar
+*.war
+*.class
 
 # Environment files
 /.env
+**/.env
 
 # Angular CLI and build artefacts
 /.angular-cli.json
@@ -26,3 +37,4 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+*.log

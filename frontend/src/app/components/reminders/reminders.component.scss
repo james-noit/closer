@@ -1,0 +1,8 @@
+.reminders-container { padding: 16px 0; }
+.reminders-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; h2 { margin: 0; } }
+.add-form-card { margin-bottom: 16px; }
+.full-width { width: 100%; margin-bottom: 8px; }
+.loading-container { display: flex; justify-content: center; padding: 32px; }
+.reminder-item { height: auto !important; }
+.reminder-icon { &.type-birthday { color: #E91E63; } &.type-appointment { color: #2196F3; } &.type-custom { color: #FF9800; } }
+.empty-state { text-align: center; padding: 48px; color: #bdbdbd; mat-icon { font-size: 48px; height: 48px; width: 48px; } }

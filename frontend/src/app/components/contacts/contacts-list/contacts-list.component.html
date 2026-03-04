@@ -1,0 +1,71 @@
+<div class="contacts-container">
+  <div class="contacts-header">
+    <h2>Contacts</h2>
+    <div class="header-actions">
+      <button mat-stroked-button (click)="openImport()">
+        <mat-icon>upload</mat-icon> Import
+      </button>
+      <button mat-raised-button color="primary" (click)="openAddContact()">
+        <mat-icon>person_add</mat-icon> Add
+      </button>
+    </div>
+  </div>
+
+  <mat-form-field appearance="outline" class="search-field">
+    <mat-label>Search contacts</mat-label>
+    <input matInput [(ngModel)]="searchQuery" (ngModelChange)="onSearch($event)" />
+    <mat-icon matPrefix>search</mat-icon>
+    <button mat-icon-button matSuffix *ngIf="searchQuery" (click)="searchQuery=''; filterContacts('')">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <div class="group-filters">
+    <button mat-chip-option
+      [class.selected]="selectedGroup === null"
+      (click)="filterByGroup(null)">All</button>
+    <button mat-chip-option *ngFor="let g of [1,2,3,4,5]"
+      [style.background-color]="groupColors[g]"
+      [style.color]="g === 3 ? '#333' : '#fff'"
+      [class.selected]="selectedGroup === g"
+      (click)="filterByGroup(g)">{{ groupLabels[g] }}</button>
+  </div>
+
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+  <mat-list *ngIf="!loading">
+    <mat-list-item *ngFor="let contact of filteredContacts" class="contact-item">
+      <div class="contact-row" (click)="viewContact(contact.id)">
+        <div class="contact-avatar" [style.background-color]="groupColors[contact.group]">
+          {{ contact.name.charAt(0).toUpperCase() }}
+        </div>
+        <div class="contact-info">
+          <span class="contact-name">{{ contact.name }}</span>
+          <span class="contact-meta">{{ contact.email || contact.phone || 'No contact info' }}</span>
+        </div>
+        <div class="contact-group-chip" [ngStyle]="getGroupStyle(contact.group)">
+          {{ groupLabels[contact.group] }}
+        </div>
+      </div>
+      <div class="contact-actions">
+        <button mat-icon-button (click)="messageContact(contact)" matTooltip="Message">
+          <mat-icon>message</mat-icon>
+        </button>
+        <button mat-icon-button (click)="openEditContact(contact)" matTooltip="Edit">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteContact(contact)" matTooltip="Delete">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+      <mat-divider></mat-divider>
+    </mat-list-item>
+    <div *ngIf="filteredContacts.length === 0" class="empty-state">
+      <mat-icon>people_outline</mat-icon>
+      <p>No contacts found</p>
+      <button mat-raised-button color="primary" (click)="openAddContact()">Add Your First Contact</button>
+    </div>
+  </mat-list>
+</div>

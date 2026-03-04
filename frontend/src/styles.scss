@@ -1,0 +1,44 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+$closer-primary: mat.define-palette(mat.$green-palette, 700, 400, 900);
+$closer-accent: mat.define-palette(mat.$orange-palette, 600);
+$closer-warn: mat.define-palette(mat.$red-palette);
+
+$closer-theme: mat.define-light-theme((
+  color: (
+    primary: $closer-primary,
+    accent: $closer-accent,
+    warn: $closer-warn,
+  ),
+  typography: mat.define-typography-config(),
+  density: 0,
+));
+
+@include mat.all-component-themes($closer-theme);
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+body {
+  background: #fafafa;
+}
+
+.group-1 { background-color: #4CAF50 !important; color: white !important; }
+.group-2 { background-color: #8BC34A !important; color: white !important; }
+.group-3 { background-color: #FFC107 !important; color: #333 !important; }
+.group-4 { background-color: #FF9800 !important; color: white !important; }
+.group-5 { background-color: #F44336 !important; color: white !important; }
+
+.mat-mdc-snack-bar-container {
+  &.success { --mdc-snackbar-container-color: #4CAF50; }
+  &.error { --mdc-snackbar-container-color: #F44336; }
+}
