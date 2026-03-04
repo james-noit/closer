@@ -1,0 +1,36 @@
+<div class="settings-container">
+  <h2>Settings</h2>
+
+  <mat-card class="settings-card">
+    <mat-card-header><mat-card-title>Profile</mat-card-title></mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name" />
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" />
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit">Save Changes</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="settings-card">
+    <mat-card-header><mat-card-title>Contact Limit</mat-card-title></mat-card-header>
+    <mat-card-content>
+      <p>Your plan allows up to <strong>150 contacts</strong>.</p>
+      <mat-progress-bar mode="determinate" value="31" style="margin-bottom: 8px;"></mat-progress-bar>
+      <p class="hint">47 of 150 contacts used</p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="settings-card">
+    <mat-card-header><mat-card-title>Notifications</mat-card-title></mat-card-header>
+    <mat-card-content>
+      <p>Enable reminder notifications to stay connected.</p>
+    </mat-card-content>
+  </mat-card>
+</div>

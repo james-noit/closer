@@ -1,0 +1,65 @@
+<div class="reminders-container">
+  <div class="reminders-header">
+    <h2>Reminders</h2>
+    <button mat-raised-button color="primary" (click)="showForm = !showForm">
+      <mat-icon>{{ showForm ? 'close' : 'add' }}</mat-icon>
+      {{ showForm ? 'Cancel' : 'Add Reminder' }}
+    </button>
+  </div>
+
+  <mat-card *ngIf="showForm" class="add-form-card">
+    <mat-card-content>
+      <form [formGroup]="reminderForm" (ngSubmit)="saveReminder()">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Title</mat-label>
+          <input matInput formControlName="title" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Type</mat-label>
+          <mat-select formControlName="type">
+            <mat-option *ngFor="let t of reminderTypes" [value]="t">{{ t }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Due Date</mat-label>
+          <input matInput type="date" formControlName="dueDate" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Description</mat-label>
+          <textarea matInput formControlName="description" rows="2"></textarea>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="reminderForm.invalid">
+          Save Reminder
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+  <mat-list *ngIf="!loading">
+    <mat-list-item *ngFor="let reminder of reminders" class="reminder-item">
+      <mat-icon matListItemIcon [class]="'reminder-icon type-' + reminder.type.toLowerCase()">
+        {{ getReminderIcon(reminder.type) }}
+      </mat-icon>
+      <div matListItemTitle>{{ reminder.title }}</div>
+      <div matListItemLine>{{ reminder.dueDate | date:'mediumDate' }} &bull; {{ reminder.type }}</div>
+      <div matListItemLine *ngIf="reminder.description">{{ reminder.description }}</div>
+      <button mat-icon-button color="warn" (click)="deleteReminder(reminder.id)">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <mat-divider></mat-divider>
+    </mat-list-item>
+
+    <div *ngIf="reminders.length === 0" class="empty-state">
+      <mat-icon>notifications_none</mat-icon>
+      <p>No reminders yet</p>
+    </div>
+  </mat-list>
+</div>

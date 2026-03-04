@@ -1,0 +1,81 @@
+<div class="detail-container" *ngIf="!loading && contact">
+  <div class="detail-header">
+    <button mat-icon-button routerLink="/contacts">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div class="contact-avatar" [ngStyle]="getGroupStyle()">
+      {{ contact.name.charAt(0).toUpperCase() }}
+    </div>
+    <div class="contact-title">
+      <h2>{{ contact.name }}</h2>
+      <span class="group-badge" [ngStyle]="getGroupStyle()">{{ groupLabels[contact.group] }}</span>
+    </div>
+    <div class="header-actions">
+      <button mat-icon-button (click)="editContact()" matTooltip="Edit">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" (click)="deleteContact()" matTooltip="Delete">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <mat-card class="info-card">
+    <mat-card-content>
+      <div class="info-row" *ngIf="contact.email">
+        <mat-icon>email</mat-icon>
+        <span>{{ contact.email }}</span>
+      </div>
+      <div class="info-row" *ngIf="contact.phone">
+        <mat-icon>phone</mat-icon>
+        <span>{{ contact.phone }}</span>
+      </div>
+      <div class="info-row" *ngIf="contact.birthday">
+        <mat-icon>cake</mat-icon>
+        <span>{{ contact.birthday | date:'longDate' }}</span>
+      </div>
+      <div class="info-row" *ngIf="contact.lastInteraction">
+        <mat-icon>history</mat-icon>
+        <span>Last interaction: {{ contact.lastInteraction | date:'mediumDate' }}</span>
+      </div>
+      <div class="info-row" *ngIf="contact.notes">
+        <mat-icon>notes</mat-icon>
+        <span>{{ contact.notes }}</span>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="actions-card">
+    <mat-card-header><mat-card-title>Connect</mat-card-title></mat-card-header>
+    <mat-card-content>
+      <div class="messaging-buttons">
+        <button mat-raised-button color="primary" (click)="sendInAppMessage()">
+          <mat-icon>message</mat-icon> Message
+        </button>
+        <button mat-raised-button class="whatsapp-btn" (click)="openWhatsApp()">
+          <mat-icon>chat</mat-icon> WhatsApp
+        </button>
+        <button mat-raised-button class="signal-btn" (click)="openSignal()">
+          <mat-icon>lock</mat-icon> Signal
+        </button>
+        <button mat-raised-button class="telegram-btn" (click)="openTelegram()">
+          <mat-icon>send</mat-icon> Telegram
+        </button>
+        <button mat-raised-button class="messenger-btn" (click)="openMessenger()">
+          <mat-icon>chat_bubble</mat-icon> Messenger
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <div class="log-interaction">
+    <button mat-raised-button color="accent" (click)="logInteraction()">
+      <mat-icon>check_circle</mat-icon>
+      Log Interaction Today
+    </button>
+  </div>
+</div>
+
+<div *ngIf="loading" class="loading-container">
+  <mat-spinner diameter="48"></mat-spinner>
+</div>

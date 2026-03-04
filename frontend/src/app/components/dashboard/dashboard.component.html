@@ -1,0 +1,71 @@
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h2>My Connections</h2>
+    <div class="contact-count" *ngIf="dashboardData">
+      <span class="count-text">{{ dashboardData.totalContacts }} / {{ dashboardData.contactLimit }} contacts</span>
+      <mat-progress-bar
+        mode="determinate"
+        [value]="(dashboardData.totalContacts / dashboardData.contactLimit) * 100"
+        class="count-bar">
+      </mat-progress-bar>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner diameter="48"></mat-spinner>
+  </div>
+
+  <div *ngIf="!loading && dashboardData" class="groups-container">
+    <div
+      *ngFor="let group of dashboardData.groups"
+      class="group-column"
+      [ngClass]="getGroupClass(group.group)"
+      (click)="goToGroup(group.group)"
+      [matTooltip]="'Click to see ' + group.label + ' contacts'">
+
+      <div class="group-count">{{ group.count }}</div>
+      <div class="group-label">{{ group.label }}</div>
+      <div class="group-desc">
+        <ng-container [ngSwitch]="group.group">
+          <span *ngSwitchCase="1">Last 2 weeks</span>
+          <span *ngSwitchCase="2">Last month</span>
+          <span *ngSwitchCase="3">Last 3 months</span>
+          <span *ngSwitchCase="4">Last 6 months</span>
+          <span *ngSwitchCase="5">Over 6 months</span>
+        </ng-container>
+      </div>
+      <div class="group-percentage">{{ group.percentage.toFixed(1) }}%</div>
+      <mat-progress-bar
+        mode="determinate"
+        [value]="group.percentage"
+        class="group-bar">
+      </mat-progress-bar>
+    </div>
+  </div>
+
+  <div class="quick-actions" *ngIf="!loading">
+    <h3>Quick Actions</h3>
+    <div class="action-buttons">
+      <button mat-raised-button color="primary" routerLink="/contacts">
+        <mat-icon>people</mat-icon>
+        View All Contacts
+      </button>
+      <button mat-stroked-button routerLink="/reminders">
+        <mat-icon>notifications</mat-icon>
+        View Reminders
+      </button>
+      <button mat-stroked-button routerLink="/messages">
+        <mat-icon>message</mat-icon>
+        Messages
+      </button>
+      <button mat-stroked-button routerLink="/invite">
+        <mat-icon>person_add</mat-icon>
+        Invite Friends
+      </button>
+    </div>
+  </div>
+
+  <button mat-fab color="primary" class="fab-add" (click)="openAddContact()" matTooltip="Add Contact">
+    <mat-icon>person_add</mat-icon>
+  </button>
+</div>

@@ -1,0 +1,50 @@
+<h2 mat-dialog-title>{{ isEdit ? 'Edit Contact' : 'Add Contact' }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="contactForm">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Full Name *</mat-label>
+      <input matInput formControlName="name" />
+      <mat-error *ngIf="contactForm.get('name')?.hasError('required')">Name is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email" />
+      <mat-error *ngIf="contactForm.get('email')?.hasError('email')">Invalid email</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Phone</mat-label>
+      <input matInput formControlName="phone" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Birthday</mat-label>
+      <input matInput type="date" formControlName="birthday" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Group</mat-label>
+      <mat-select formControlName="group">
+        <mat-option [value]="1">Group 1 - Recent (last 2 weeks)</mat-option>
+        <mat-option [value]="2">Group 2 - Monthly</mat-option>
+        <mat-option [value]="3">Group 3 - 3 Months</mat-option>
+        <mat-option [value]="4">Group 4 - 6 Months</mat-option>
+        <mat-option [value]="5">Group 5 - Overdue</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Notes</mat-label>
+      <textarea matInput formControlName="notes" rows="3"></textarea>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="loading || contactForm.invalid">
+    {{ isEdit ? 'Update' : 'Add Contact' }}
+  </button>
+</mat-dialog-actions>

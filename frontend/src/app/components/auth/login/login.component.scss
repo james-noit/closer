@@ -1,0 +1,92 @@
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+  padding: 16px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 8px;
+}
+
+.app-title {
+  text-align: center;
+  font-size: 2rem;
+  margin: 0 0 4px;
+  color: #4CAF50;
+}
+
+.subtitle {
+  text-align: center;
+  color: #757575;
+  margin: 0 0 24px;
+  font-size: 0.9rem;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.submit-btn {
+  padding: 8px;
+  font-size: 1rem;
+  margin-top: 8px;
+}
+
+.inline-spinner {
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+  color: #bdbdbd;
+
+  &::before, &::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  span {
+    padding: 0 12px;
+    font-size: 0.85rem;
+  }
+}
+
+.sso-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.google-btn {
+  border-color: #DB4437 !important;
+  color: #DB4437 !important;
+  .google-icon {
+    font-weight: 700;
+    margin-right: 8px;
+    font-family: serif;
+    color: #DB4437;
+  }
+}
+
+.github-btn {
+  border-color: #333 !important;
+  color: #333 !important;
+}
+
+.register-link {
+  text-align: center;
+  a { color: #4CAF50; text-decoration: none; font-weight: 600; }
+}
+
+mat-card-header {
+  justify-content: center;
+}
