@@ -1,0 +1,21 @@
+meta {
+  name: Eliminar Persona
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{baseUrl}}/api/personas/{{personaId}}
+  body: none
+  auth: inherit
+}
+
+script:post-response {
+  test('Status 204', function () {
+      expect(res.getStatus()).to.equal(204);
+  });
+}
+
+settings {
+  encodeUrl: true
+}

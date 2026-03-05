@@ -1,0 +1,39 @@
+meta {
+  name: Actualizar Persona
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{baseUrl}}/api/personas/{{personaId}}
+  body: json
+  auth: inherit
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "nombre": "Ana Maria",
+    "apellidos": "Lopez Perez",
+    "numeroTelefono": "+34999888777",
+    "fechaCumpleanos": "1992-06-15",
+    "email": "ana.maria@example.com"
+  }
+}
+
+script:post-response {
+  test('Status 200', function () {
+      expect(res.getStatus()).to.equal(200);
+  });
+  test('Nombre actualizado', function () {
+      var data = res.getBody();
+      expect(data.nombre).to.eql('Ana Maria');
+  });
+}
+
+settings {
+  encodeUrl: true
+}

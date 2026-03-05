@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: closer-backend
+  profiles:
+    default: local
+  jpa:
+    open-in-view: false
+
+server:
+  port: 8080

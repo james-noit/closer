@@ -1,0 +1,21 @@
+meta {
+  name: Obtener Persona por ID
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/api/personas/{{personaId}}
+  body: none
+  auth: inherit
+}
+
+script:post-response {
+  test('Status 200', function () {
+      expect(res.getStatus()).to.equal(200);
+  });
+}
+
+settings {
+  encodeUrl: true
+}
