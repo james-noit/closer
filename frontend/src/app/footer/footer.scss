@@ -1,0 +1,9 @@
+.site-footer {
+  width: min(1080px, 92vw);
+  margin: 0 auto 1rem;
+  padding: 0.8rem 1rem;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--tertiary) 60%, white 40%);
+  border: 1px solid color-mix(in srgb, var(--tertiary-dark) 30%, white 70%);
+  font-size: 0.9rem;
+}

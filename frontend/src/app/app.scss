@@ -1,0 +1,36 @@
+:host {
+	--primary: #f6e8b1;
+	--primary-light: #fff6d6;
+	--primary-dark: #d4be7a;
+
+	--secondary: #b8d8b5;
+	--secondary-light: #d5edd3;
+	--secondary-dark: #89b784;
+
+	--tertiary: #b8d8d1;
+	--tertiary-light: #d9eee8;
+	--tertiary-dark: #87b7ad;
+
+	--text-main: #2e302f;
+	--surface: #fffef8;
+
+	display: block;
+	min-height: 100dvh;
+	color: var(--text-main);
+	background:
+		radial-gradient(circle at 10% 0%, var(--primary-light) 0%, transparent 45%),
+		radial-gradient(circle at 90% 15%, var(--tertiary-light) 0%, transparent 42%),
+		linear-gradient(180deg, var(--surface) 0%, #f6f9f4 100%);
+}
+
+.app-shell {
+	min-height: 100dvh;
+	display: grid;
+	grid-template-rows: auto 1fr auto;
+}
+
+.app-main {
+	width: min(1080px, 92vw);
+	margin: 0 auto;
+	padding: 1.25rem 0 2rem;
+}

@@ -1,0 +1,27 @@
+<section class="home-hero">
+  <p class="eyebrow">Vista general</p>
+  <h1>Panel de inicio</h1>
+  <p class="lead">
+    Esta es la pantalla principal con datos mock. El login se implementara en una fase posterior.
+  </p>
+</section>
+
+<section class="chart-card" aria-label="Grafico de actividad semanal mock">
+  <header class="chart-header">
+    <h2>Actividad semanal</h2>
+    <p>Mapa de calor de verde a rojo</p>
+  </header>
+
+  <div class="chart-columns">
+    @for (columna of columnas; track columna.etiqueta) {
+      <div class="column-wrap">
+        <div
+          class="column {{ columna.claseCalor }}"
+          [style.height.%]="columna.valor"
+          [attr.aria-label]="columna.etiqueta + ': ' + columna.valor"
+        ></div>
+        <span>{{ columna.etiqueta }}</span>
+      </div>
+    }
+  </div>
+</section>
