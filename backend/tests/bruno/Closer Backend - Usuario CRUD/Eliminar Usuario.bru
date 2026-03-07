@@ -1,0 +1,20 @@
+meta {
+  name: Eliminar Usuario
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{baseUrl}}/api/usuarios/{{usuarioId}}
+  auth: inherit
+}
+
+script:post-response {
+  test('Status 204', function () {
+      expect(res.getStatus()).to.equal(204);
+  });
+}
+
+settings {
+  encodeUrl: true
+}

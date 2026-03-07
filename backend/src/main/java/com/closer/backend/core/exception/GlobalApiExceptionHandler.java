@@ -26,6 +26,17 @@ public class GlobalApiExceptionHandler {
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(detail);
   }
 
+  @ExceptionHandler(com.closer.backend.usuario.web.UsuarioNotFoundException.class)
+  public ResponseEntity<ProblemDetail> handleUsuarioNotFound(
+      com.closer.backend.usuario.web.UsuarioNotFoundException ex) {
+    LOGGER.warn("Recurso de usuario no encontrado: {}", ex.getMessage());
+
+    ProblemDetail detail = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
+    detail.setTitle("Usuario no encontrado");
+    detail.setDetail(ex.getMessage());
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(detail);
+  }
+
   @ExceptionHandler(MethodArgumentNotValidException.class)
   public ResponseEntity<ProblemDetail> handleValidation(MethodArgumentNotValidException ex) {
     LOGGER.warn("Error de validacion en request: {}", ex.getMessage());

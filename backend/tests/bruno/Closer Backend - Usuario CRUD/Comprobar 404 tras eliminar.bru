@@ -1,0 +1,20 @@
+meta {
+  name: Comprobar 404 tras eliminar
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{baseUrl}}/api/usuarios/{{usuarioId}}
+  auth: inherit
+}
+
+script:post-response {
+  test('Status 404', function () {
+      expect(res.getStatus()).to.equal(404);
+  });
+}
+
+settings {
+  encodeUrl: true
+}
