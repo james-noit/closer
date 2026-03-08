@@ -33,6 +33,7 @@ public class SecurityConfig {
         // - everything else requires authentication
         return http
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.GET, "/actuator/health").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
@@ -51,6 +52,19 @@ public class SecurityConfig {
         // Delegating encoder keeps compatibility with existing {noop} test data and
         // supports stronger encodings (bcrypt) for new passwords.
         return org.springframework.security.crypto.factory.PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
+
+    // CORS configuration allowing frontend origin (adjust if different)
+    @Bean
+    public org.springframework.web.cors.CorsConfigurationSource corsConfigurationSource() {
+        org.springframework.web.cors.CorsConfiguration config = new org.springframework.web.cors.CorsConfiguration();
+        config.setAllowedOrigins(java.util.List.of("http://localhost:4200"));
+        config.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedHeaders(java.util.List.of("*"));
+        config.setAllowCredentials(true);
+        org.springframework.web.cors.UrlBasedCorsConfigurationSource source = new org.springframework.web.cors.UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
     }
 
     @Bean

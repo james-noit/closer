@@ -44,6 +44,19 @@ To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use th
 ng test
 ```
 
+## Configuration and environments
+
+The application uses Angular's `src/environments` files to store configuration values such as the base
+URL of the backend API. The two main files are:
+
+* `environment.ts` – development (default, points to `http://localhost:8080/api`).
+* `environment.prod.ts` – production; automatically substituted during a `ng build --configuration production`.
+
+The production configuration is defined via a file replacement entry in `angular.json`,
+so building for prod will bundle the appropriate `apiUrl` value.  
+
+Services (e.g. `AuthService`) import this object and build requests with `environment.apiUrl`.
+
 ## Running end-to-end tests
 
 For end-to-end (e2e) testing, run:

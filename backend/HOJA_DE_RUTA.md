@@ -12,6 +12,7 @@ Fecha de referencia: 2026-03-08
 - Pruebas unitarias/integración bajo `src/test/java/com/closer/backend` verificando el funcionamiento de la aplicación (e.g. `CloserBackendApplicationTests`).
 - Suites de pruebas Bruno actualizadas: encabezados HTTP corregidos (sin comillas en nombres, tokens formateados correctamente) y cabeceras redundantes eliminadas.
 - Seguridad JWT operativa con `SecurityFilterChain` stateless, `JwtAuthenticationFilter` y endpoint `POST /api/auth/login`.
+- Configuración CORS global habilitada para aceptar peticiones desde `http://localhost:4200` (corregido tras bloqueo del navegador).
 - Flujo de autenticación ampliado con `POST /api/auth/refresh` (rotación de refresh token) y `POST /api/auth/logout` (revocación).
 - Estrategia de revocación persistida en tabla `refresh_tokens` con hash SHA-256 (no se guarda el refresh token en claro).
 - Protección de login activa: rate limiting por IP y lockout temporal por usuario tras intentos fallidos.

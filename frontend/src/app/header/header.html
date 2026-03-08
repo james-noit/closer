@@ -1,6 +1,12 @@
 <header class="site-header">
   <div class="brand">Closer</div>
   <nav aria-label="Navegacion principal">
-    <a href="#" aria-current="page">Inicio</a>
+    <a routerLink="/" aria-current="page">Inicio</a>
+    <ng-container *ngIf="!loggedIn">
+      <a routerLink="/login">Login</a>
+    </ng-container>
+    <ng-container *ngIf="loggedIn">
+      <a (click)="logout()" href="javascript:void(0)">Logout</a>
+    </ng-container>
   </nav>
 </header>

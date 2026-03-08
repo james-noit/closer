@@ -1,0 +1,107 @@
+/* estilo sencillo para el formulario de login */
+.login-container {
+  max-width: 360px;
+  margin: 4rem auto;
+  padding: 2rem;
+  background: var(--surface);
+  border: 1px solid var(--secondary-light);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  margin-top: 0;
+}
+
+.field {
+  margin-bottom: 1rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--secondary);
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* ---------- botón ---------- */
+button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.75rem;
+  background: var(--primary);
+  border: none;
+  border-radius: 4px;
+  color: var(--text-main);
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.25s ease, transform 0.2s ease, opacity 0.2s ease;
+}
+
+button:hover:not(:disabled) {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+}
+
+button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* ---------- spinner ---------- */
+.spinner {
+  display: inline-block;
+  width: 1.1rem;
+  height: 1.1rem;
+  border: 2.5px solid var(--text-main);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------- tarjeta de error ---------- */
+.error-card {
+  margin-top: 1.25rem;
+  padding: 0.85rem 1rem;
+  background: color-mix(in srgb, #e74c3c 12%, var(--surface) 88%);
+  border-left: 4px solid #e74c3c;
+  border-radius: 4px;
+  animation: slideIn 0.3s ease;
+}
+
+.error-card strong {
+  display: block;
+  color: #c0392b;
+}
+
+.error-card p {
+  margin: 0.35rem 0 0;
+  font-size: 0.9rem;
+  color: var(--text-main);
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

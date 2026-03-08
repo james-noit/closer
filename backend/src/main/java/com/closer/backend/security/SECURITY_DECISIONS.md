@@ -77,3 +77,20 @@ Se registran eventos de seguridad sin volcar secretos.
 - `ERROR`: errores no controlados.
 
 No se registran contraseñas ni tokens en texto plano.
+
+## Integracion con frontend
+
+1. CORS configurado en `SecurityConfig`:
+   - Origen permitido: `http://localhost:4200` (desarrollo).
+   - Metodos: GET, POST, PUT, DELETE, OPTIONS.
+   - Credenciales permitidas (`allowCredentials=true`).
+
+2. Interceptor HTTP centralizado en el frontend (`core/interceptors/http.interceptor.ts`):
+   - Adjunta `Authorization: Bearer <token>` a todas las peticiones excepto `/auth/*`.
+   - Ante un `401` en endpoint protegido, intenta refresh transparente una vez.
+   - Si el refresh falla, limpia tokens y fuerza logout.
+   - Errores de `/auth/*` (login, refresh, logout) se propagan al componente para gestion local.
+
+3. Gestion de errores en login:
+   - El frontend muestra `title` y `detail` del `ProblemDetail` devuelto por el backend.
+   - Codigos gestionados: `401` (credenciales), `423` (bloqueo), `429` (rate limit).
