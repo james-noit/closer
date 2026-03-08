@@ -21,6 +21,12 @@ public class PersonaServiceImpl implements PersonaService {
     }
 
     @Override
+    public List<Persona> findAllByUsuarioId(Long usuarioId) {
+        // devolvemos solo las personas que pertenecen al usuario dado
+        return personaRepository.findByUsuarioId(usuarioId);
+    }
+
+    @Override
     public Persona findById(Long id) {
         return personaRepository.findById(id)
                 .orElseThrow(() -> new PersonaNotFoundException(id));

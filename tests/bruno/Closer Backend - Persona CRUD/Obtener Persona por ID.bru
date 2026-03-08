@@ -1,14 +1,15 @@
 meta {
-  name: Listar Personas
+  name: Obtener Persona por ID
   type: http
-  seq: 2
+  seq: 3
 }
 
 get {
-  url: {{baseUrl}}/api/personas
+  url: {{baseUrl}}/api/personas/{{personaId}}
   body: none
   auth: inherit
 }
+
 
 script:post-response {
   test('Status 200', function () {

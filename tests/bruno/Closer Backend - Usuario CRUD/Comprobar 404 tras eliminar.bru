@@ -1,17 +1,18 @@
 meta {
-  name: Eliminar Usuario
+  name: Comprobar 404 tras eliminar
   type: http
-  seq: 5
+  seq: 6
 }
 
-delete {
+get {
   url: {{baseUrl}}/api/usuarios/{{usuarioId}}
   auth: inherit
 }
 
+
 script:post-response {
-  test('Status 204', function () {
-      expect(res.getStatus()).to.equal(204);
+  test('Status 404', function () {
+      expect(res.getStatus()).to.equal(404);
   });
 }
 

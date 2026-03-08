@@ -26,3 +26,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+backend/data/closer-local.trace.db
+backend/data/closer-local.lock.db
+backend/data/closer-local.mv.db

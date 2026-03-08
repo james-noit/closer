@@ -1,17 +1,18 @@
 meta {
-  name: Obtener Usuario por ID
+  name: Eliminar Usuario
   type: http
-  seq: 3
+  seq: 5
 }
 
-get {
+delete {
   url: {{baseUrl}}/api/usuarios/{{usuarioId}}
   auth: inherit
 }
 
+
 script:post-response {
-  test('Status 200', function () {
-      expect(res.getStatus()).to.equal(200);
+  test('Status 204', function () {
+      expect(res.getStatus()).to.equal(204);
   });
 }
 

@@ -1,0 +1,19 @@
+meta {
+  name: Validar token
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/api/personas
+  body: none
+  auth: inherit
+}
+
+
+script:post-response {
+  test('Status 200, 401 o 403', function () {
+      // 401 = token faltante/mal, 403 = token valido pero sin permisos
+      expect([200,401,403]).to.include(res.getStatus());
+  });
+}

@@ -1,0 +1,38 @@
+meta {
+  name: Login Otro Usuario
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{baseUrl}}/api/auth/login
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "username": "{{otherUsername}}",
+    "password": "{{otherPassword}}"
+  }
+}
+
+script:post-response {
+  test('Status 200', function () {
+      expect(res.getStatus()).to.equal(200);
+  });
+  var data = res.getBody();
+  test('Token presente', function () {
+      expect(data.token).to.not.equal(undefined);
+      expect(data.token.length).to.be.above(0);
+  });
+  bru.setVar('authToken', data.token);
+}
+
+settings {
+  encodeUrl: true
+}

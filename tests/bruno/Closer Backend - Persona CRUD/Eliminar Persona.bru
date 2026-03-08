@@ -1,18 +1,19 @@
 meta {
-  name: Comprobar 404 tras eliminar
+  name: Eliminar Persona
   type: http
-  seq: 6
+  seq: 5
 }
 
-get {
+delete {
   url: {{baseUrl}}/api/personas/{{personaId}}
   body: none
   auth: inherit
 }
 
+
 script:post-response {
-  test('Status 404', function () {
-      expect(res.getStatus()).to.equal(404);
+  test('Status 204', function () {
+      expect(res.getStatus()).to.equal(204);
   });
 }
 

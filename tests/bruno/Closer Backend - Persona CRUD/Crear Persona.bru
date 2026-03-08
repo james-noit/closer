@@ -1,11 +1,11 @@
 meta {
-  name: Crear Usuario
+  name: Crear Persona
   type: http
   seq: 1
 }
 
 post {
-  url: {{baseUrl}}/api/usuarios
+  url: {{baseUrl}}/api/personas
   body: json
   auth: inherit
 }
@@ -16,9 +16,11 @@ headers {
 
 body:json {
   {
-    "username": "user1",
-    "password": "secret",
-    "persona": null
+    "nombre": "Ana",
+    "apellidos": "Lopez",
+    "numeroTelefono": "+34123456789",
+    "fechaCumpleanos": "1992-06-15",
+    "email": "ana.lopez@example.com"
   }
 }
 
@@ -27,9 +29,5 @@ script:post-response {
       expect(res.getStatus()).to.equal(201);
   });
   var data = res.getBody();
-  bru.setVar('usuarioId', data.id);
-}
-
-settings {
-  encodeUrl: true
+  bru.setVar('personaId', data.id);
 }

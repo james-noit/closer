@@ -1,0 +1,32 @@
+meta {
+  name: Login invalido
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/api/auth/login
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "username": "wrong",
+    "password": "bad"
+  }
+}
+
+script:post-response {
+  test('Status 401', function () {
+      expect(res.getStatus()).to.equal(401);
+  });
+}
+
+settings {
+  encodeUrl: true
+}

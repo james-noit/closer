@@ -1,13 +1,14 @@
 meta {
-  name: Listar Usuarios
+  name: Obtener Usuario por ID
   type: http
-  seq: 2
+  seq: 3
 }
 
 get {
-  url: {{baseUrl}}/api/usuarios
+  url: {{baseUrl}}/api/usuarios/{{usuarioId}}
   auth: inherit
 }
+
 
 script:post-response {
   test('Status 200', function () {

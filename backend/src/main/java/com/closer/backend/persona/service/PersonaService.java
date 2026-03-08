@@ -7,6 +7,8 @@ public interface PersonaService {
 
     List<Persona> findAll();
 
+    List<Persona> findAllByUsuarioId(Long usuarioId);
+
     Persona findById(Long id);
 
     Persona create(Persona persona);

@@ -2,6 +2,7 @@ package com.closer.backend.usuario.service;
 
 import com.closer.backend.persona.domain.Persona;
 import com.closer.backend.usuario.domain.Usuario;
+import com.closer.backend.usuario.domain.UserRole;
 import com.closer.backend.usuario.repository.UsuarioRepository;
 import com.closer.backend.usuario.web.UsuarioNotFoundException;
 import java.util.List;
@@ -35,7 +36,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 
   @Override
   public Usuario create(Usuario usuario) {
-    // podríamos validar unicidad de username aquí si se desea
+    if (usuario.getRole() == null) {
+      usuario.setRole(UserRole.ROLE_LOGGED_USER);
+    }
     return usuarioRepository.save(usuario);
   }
 
@@ -45,6 +48,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     existing.setUsername(usuario.getUsername());
     existing.setPassword(usuario.getPassword());
     existing.setPersona(usuario.getPersona());
+    existing.setRole(usuario.getRole() == null ? existing.getRole() : usuario.getRole());
     return usuarioRepository.save(existing);
   }
 

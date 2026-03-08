@@ -1,0 +1,19 @@
+auth {
+  mode: bearer
+  token: "{{authToken}}"
+}
+
+vars:pre-request {
+  baseUrl: http://localhost:8080
+  authToken: 
+  loginUsername: localuser
+  loginPassword: secret
+}
+
+vars:post-response {
+  authToken: 
+}
+
+docs {
+  Pruebas de login y JWT.
+}

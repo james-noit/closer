@@ -1,11 +1,14 @@
 package com.closer.backend.persona.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;
@@ -40,6 +43,11 @@ public class Persona {
     @Email
     @Column(length = 150)
     private String email;
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "usuario_id")
+    private com.closer.backend.usuario.domain.Usuario usuario;
 
     public Long getId() {
         return id;
@@ -87,5 +95,13 @@ public class Persona {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public com.closer.backend.usuario.domain.Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(com.closer.backend.usuario.domain.Usuario usuario) {
+        this.usuario = usuario;
     }
 }
