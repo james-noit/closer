@@ -103,6 +103,17 @@ public class GlobalApiExceptionHandler {
     return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body(detail);
   }
 
+  @ExceptionHandler(com.closer.backend.usuario.web.UsuarioAlreadyExistsException.class)
+  public ResponseEntity<ProblemDetail> handleUsuarioExists(
+      com.closer.backend.usuario.web.UsuarioAlreadyExistsException ex) {
+    LOGGER.warn("Intento de crear usuario duplicado", ex);
+
+    ProblemDetail detail = ProblemDetail.forStatus(HttpStatus.CONFLICT);
+    detail.setTitle("Usuario ya existente");
+    detail.setDetail(ex.getMessage());
+    return ResponseEntity.status(HttpStatus.CONFLICT).body(detail);
+  }
+
   @ExceptionHandler(AccessDeniedException.class)
   public ResponseEntity<ProblemDetail> handleAccessDenied(AccessDeniedException ex) {
     LOGGER.warn("Acceso denegado", ex);

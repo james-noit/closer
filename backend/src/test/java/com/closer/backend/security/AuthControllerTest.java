@@ -304,4 +304,27 @@ public class AuthControllerTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.title").value("Datos no validos"));
     }
+
+    @Test
+    public void creatingDuplicateUsuarioReturns409() throws Exception {
+        String token = obtainTokenFor("admin", "secret");
+
+        Map<String, String> u = Map.of("username", "duplicate", "password", "{noop}dup123");
+        String body2 = objectMapper.writeValueAsString(u);
+
+        // first creation should succeed
+        mockMvc.perform(post("/api/usuarios")
+                .header("Authorization", "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body2))
+                .andExpect(status().isCreated());
+
+        // second attempt with same username must return 409 Conflict
+        mockMvc.perform(post("/api/usuarios")
+                .header("Authorization", "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body2))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.title").value("Usuario ya existente"));
+    }
 }

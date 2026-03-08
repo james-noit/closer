@@ -1,8 +1,8 @@
 -- Datos de prueba para entorno local (50 personas)
 -- usuario de prueba para asociar a las personas
-INSERT INTO usuarios (id, username, password, role, failed_login_attempts) VALUES (1, 'localuser', '{noop}secret', 'ROLE_LOGGED_USER', 0);
-INSERT INTO usuarios (id, username, password, role, failed_login_attempts) VALUES (2, 'otheruser', '{noop}secret', 'ROLE_LOGGED_USER', 0);
-INSERT INTO usuarios (id, username, password, role, failed_login_attempts) VALUES (3, 'admin', '{noop}secret', 'ROLE_ADMIN', 0);
+INSERT INTO usuarios (username, password, role, failed_login_attempts) VALUES ('localuser', '{noop}secret', 'ROLE_LOGGED_USER', 0);
+INSERT INTO usuarios (username, password, role, failed_login_attempts) VALUES ('otheruser', '{noop}secret', 'ROLE_LOGGED_USER', 0);
+INSERT INTO usuarios (username, password, role, failed_login_attempts) VALUES ('admin', '{noop}secret', 'ROLE_ADMIN', 0);
 
 INSERT INTO personas (nombre, apellidos, numero_telefono, fecha_cumpleanos, email, usuario_id) VALUES ('LocalNombre01', 'LocalApellido01', '+34910000001', '1981-02-02', 'local01@closer.test', 1);
 INSERT INTO personas (nombre, apellidos, numero_telefono, fecha_cumpleanos, email, usuario_id) VALUES ('LocalNombre02', 'LocalApellido02', '+34910000002', '1982-03-03', 'local02@closer.test', 1);

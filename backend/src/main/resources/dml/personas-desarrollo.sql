@@ -1,7 +1,7 @@
 -- usuario de prueba para asociar a las personas
-INSERT INTO usuarios (id, username, password, role, failed_login_attempts) VALUES (1, 'devuser', '{noop}secret', 'ROLE_LOGGED_USER', 0);
-INSERT INTO usuarios (id, username, password, role, failed_login_attempts) VALUES (2, 'otheruser', '{noop}secret', 'ROLE_LOGGED_USER', 0);
-INSERT INTO usuarios (id, username, password, role, failed_login_attempts) VALUES (3, 'admin', '{noop}secret', 'ROLE_ADMIN', 0);
+INSERT INTO usuarios (username, password, role, failed_login_attempts) VALUES ('devuser', '{noop}secret', 'ROLE_LOGGED_USER', 0);
+INSERT INTO usuarios (username, password, role, failed_login_attempts) VALUES ('otheruser', '{noop}secret', 'ROLE_LOGGED_USER', 0);
+INSERT INTO usuarios (username, password, role, failed_login_attempts) VALUES ('admin', '{noop}secret', 'ROLE_ADMIN', 0);
 
 -- Datos de prueba para entorno desarrollo (50 personas)
 INSERT INTO personas (nombre, apellidos, numero_telefono, fecha_cumpleanos, email, usuario_id) VALUES ('DevNombre01', 'DevApellido01', '+34820000001', '1976-07-05', 'dev01@closer.test', 1);

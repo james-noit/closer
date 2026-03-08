@@ -36,6 +36,11 @@ public class UsuarioServiceImpl implements UsuarioService {
 
   @Override
   public Usuario create(Usuario usuario) {
+    // if the username already exists, fail early with a custom exception
+    usuarioRepository.findByUsername(usuario.getUsername()).ifPresent(u -> {
+      throw new com.closer.backend.usuario.web.UsuarioAlreadyExistsException(usuario.getUsername());
+    });
+
     if (usuario.getRole() == null) {
       usuario.setRole(UserRole.ROLE_LOGGED_USER);
     }
