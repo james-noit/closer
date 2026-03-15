@@ -7,6 +7,7 @@ import { environment } from '../../environments/environment';
 
 const TOKEN_KEY = 'closer_token';
 const REFRESH_KEY = 'closer_refresh';
+const TOKEN_EXP_KEY = 'closer_token_exp';
 
 // util para verificar si estamos en el navegador (no en SSR)
 const isBrowser = typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
@@ -23,7 +24,7 @@ export class AuthService {
     const req: AuthenticationRequest = { username, password };
     return this.http.post<AuthenticationResponse>(`${this.base}/auth/login`, req).pipe(
       tap(resp => {
-        this.storeTokens(resp.token, resp.refreshToken);
+        this.storeTokens(resp.token, resp.refreshToken, resp.expiresIn);
         this.loggedIn$.next(true);
       })
     );
@@ -31,8 +32,7 @@ export class AuthService {
 
   logout(): Observable<void> {
     const refresh = this.getRefreshToken();
-    this.clearTokens();
-    this.loggedIn$.next(false);
+    this.clearSession();
     if (refresh) {
       return this.http.post<void>(`${this.base}/auth/logout`, { refreshToken: refresh });
     }
@@ -46,13 +46,33 @@ export class AuthService {
     }
     return this.http.post<AuthenticationResponse>(`${this.base}/auth/refresh`, { refreshToken: refresh }).pipe(
       tap(resp => {
-        this.storeTokens(resp.token, resp.refreshToken);
+        this.storeTokens(resp.token, resp.refreshToken, resp.expiresIn);
       })
     );
   }
 
+  /** Clears tokens and updates login state synchronously – does NOT call the backend. */
+  clearSession(): void {
+    this.clearTokens();
+    this.loggedIn$.next(false);
+  }
+
   isLoggedIn(): boolean {
     return this.loggedIn$.value;
+  }
+
+  /** Returns true when the stored access token has passed its expiry timestamp. */
+  isAccessTokenExpired(): boolean {
+    if (!isBrowser) return true;
+    const exp = localStorage.getItem(TOKEN_EXP_KEY);
+    if (!exp) return true;
+    return Date.now() > Number(exp);
+  }
+
+  /** Returns true when a refresh token is present in storage. */
+  hasRefreshToken(): boolean {
+    if (!isBrowser) return false;
+    return !!localStorage.getItem(REFRESH_KEY);
   }
 
   getToken(): string | null {
@@ -65,16 +85,20 @@ export class AuthService {
     return localStorage.getItem(REFRESH_KEY);
   }
 
-  private storeTokens(token: string, refresh: string) {
+  private storeTokens(token: string, refresh: string, expiresIn?: number) {
     if (!isBrowser) return;
     localStorage.setItem(TOKEN_KEY, token);
     localStorage.setItem(REFRESH_KEY, refresh);
+    if (expiresIn !== null && expiresIn !== undefined) {
+      localStorage.setItem(TOKEN_EXP_KEY, String(Date.now() + expiresIn * 1000));
+    }
   }
 
   private clearTokens() {
     if (!isBrowser) return;
     localStorage.removeItem(TOKEN_KEY);
     localStorage.removeItem(REFRESH_KEY);
+    localStorage.removeItem(TOKEN_EXP_KEY);
   }
 
   getLoggedIn$(): Observable<boolean> {
