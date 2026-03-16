@@ -1,12 +1,45 @@
-<header class="site-header">
-  <div class="brand">Closer</div>
-  <nav aria-label="Navegacion principal">
-    <a routerLink="/" aria-current="page">Inicio</a>
-    <ng-container *ngIf="!loggedIn">
-      <a routerLink="/login">Login</a>
-    </ng-container>
-    <ng-container *ngIf="loggedIn">
-      <a (click)="logout()" href="javascript:void(0)">Logout</a>
-    </ng-container>
-  </nav>
-</header>
+<nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom">
+  <div class="container">
+    <a class="navbar-brand fw-semibold" routerLink="/" (click)="closeMenu()">Closer</a>
+
+    <button
+      *ngIf="showNavItems"
+      class="navbar-toggler"
+      type="button"
+      (click)="toggleMenu()"
+      aria-controls="mainNavbarContent"
+      [attr.aria-expanded]="isMenuOpen"
+      aria-label="Mostrar navegacion"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div
+      *ngIf="showNavItems"
+      class="collapse navbar-collapse"
+      id="mainNavbarContent"
+      [class.show]="isMenuOpen"
+    >
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            (click)="closeMenu()"
+          >Inicio</a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item" *ngIf="!loggedIn">
+          <a class="nav-link" routerLink="/login" routerLinkActive="active" (click)="closeMenu()">Login</a>
+        </li>
+        <li class="nav-item" *ngIf="loggedIn">
+          <button class="nav-link btn btn-link border-0 p-0" type="button" (click)="logout()">Logout</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

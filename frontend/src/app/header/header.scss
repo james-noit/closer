@@ -1,28 +1,4 @@
-.site-header {
-  width: min(1080px, 92vw);
-  margin: 1rem auto 0;
-  padding: 0.8rem 1rem;
-  border-radius: 14px;
-  border: 1px solid color-mix(in srgb, var(--primary-dark) 35%, white 65%);
-  background: color-mix(in srgb, var(--primary) 70%, white 30%);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.navbar-brand {
+  letter-spacing: 0.03em;
 }
 
-.brand {
-  font-weight: 700;
-  letter-spacing: 0.04em;
-}
-
-nav a {
-  color: inherit;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-@media (max-width: 640px) {
-  .site-header {
-    margin-top: 0.75rem;
-  }
-}
