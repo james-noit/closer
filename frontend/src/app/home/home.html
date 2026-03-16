@@ -1,27 +1,103 @@
 <section class="home-hero">
   <p class="eyebrow">Vista general</p>
   <h1>Panel de inicio</h1>
-  <p class="lead">
-    Esta es la pantalla principal con datos mock. El login se implementara en una fase posterior.
-  </p>
+  <p class="lead">Gestión de tus personas.</p>
 </section>
 
-<section class="chart-card" aria-label="Grafico de actividad semanal mock">
-  <header class="chart-header">
-    <h2>Actividad semanal</h2>
-    <p>Mapa de calor de verde a rojo</p>
+<section class="personas-card" aria-label="Lista de personas">
+  <header class="personas-header">
+    <h2>Personas</h2>
+    <button class="btn-refresh" (click)="cargarPersonas()" [disabled]="loading()" aria-label="Actualizar lista">
+      Actualizar
+    </button>
   </header>
 
-  <div class="chart-columns">
-    @for (columna of columnas; track columna.etiqueta) {
-      <div class="column-wrap">
-        <div
-          class="column {{ columna.claseCalor }}"
-          [style.height.%]="columna.valor"
-          [attr.aria-label]="columna.etiqueta + ': ' + columna.valor"
-        ></div>
-        <span>{{ columna.etiqueta }}</span>
-      </div>
-    }
-  </div>
+  @if (loading()) {
+    <p class="estado-info" role="status">Cargando personas…</p>
+  }
+
+  @if (errorMsg()) {
+    <p class="estado-error" role="alert">{{ errorMsg() }}</p>
+  }
+
+  @if (!loading() && !errorMsg()) {
+    <div class="table-wrapper">
+      <table class="personas-table">
+        <thead>
+          <tr>
+            <th scope="col">
+              Nombre
+              <input
+                type="text"
+                class="col-filter"
+                placeholder="Filtrar…"
+                [ngModel]="filtroNombre()"
+                (ngModelChange)="filtroNombre.set($event)"
+                aria-label="Filtrar por nombre"
+              />
+            </th>
+            <th scope="col">
+              Apellidos
+              <input
+                type="text"
+                class="col-filter"
+                placeholder="Filtrar…"
+                [ngModel]="filtroApellidos()"
+                (ngModelChange)="filtroApellidos.set($event)"
+                aria-label="Filtrar por apellidos"
+              />
+            </th>
+            <th scope="col">
+              Teléfono
+              <input
+                type="text"
+                class="col-filter"
+                placeholder="Filtrar…"
+                [ngModel]="filtroTelefono()"
+                (ngModelChange)="filtroTelefono.set($event)"
+                aria-label="Filtrar por teléfono"
+              />
+            </th>
+            <th scope="col">
+              Cumpleaños
+              <input
+                type="text"
+                class="col-filter"
+                placeholder="Filtrar…"
+                [ngModel]="filtroCumpleanos()"
+                (ngModelChange)="filtroCumpleanos.set($event)"
+                aria-label="Filtrar por cumpleaños"
+              />
+            </th>
+            <th scope="col">
+              Email
+              <input
+                type="text"
+                class="col-filter"
+                placeholder="Filtrar…"
+                [ngModel]="filtroEmail()"
+                (ngModelChange)="filtroEmail.set($event)"
+                aria-label="Filtrar por email"
+              />
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (persona of personasFiltradas(); track persona.id) {
+            <tr>
+              <td>{{ persona.nombre }}</td>
+              <td>{{ persona.apellidos }}</td>
+              <td>{{ persona.numeroTelefono }}</td>
+              <td>{{ persona.fechaCumpleanos }}</td>
+              <td>{{ persona.email ?? '—' }}</td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="5" class="sin-resultados">Sin resultados.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
 </section>
