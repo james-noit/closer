@@ -30,6 +30,14 @@
             (click)="closeMenu()"
           >Inicio</a>
         </li>
+        <li class="nav-item" *ngIf="loggedIn && isAdmin">
+          <a
+            class="nav-link"
+            routerLink="/admin/grupos"
+            routerLinkActive="active"
+            (click)="closeMenu()"
+          >Grupos</a>
+        </li>
       </ul>
 
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">

@@ -105,6 +105,21 @@ export class AuthService {
     return this.loggedIn$.asObservable();
   }
 
+  getUserRole(): string | null {
+    const token = this.getToken();
+    if (!token) return null;
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.role ?? null;
+    } catch {
+      return null;
+    }
+  }
+
+  isAdmin(): boolean {
+    return this.getUserRole() === 'ROLE_ADMIN';
+  }
+
   private hasToken(): boolean {
     // en SSR devolvemos false; el BehaviorSubject se sincronizará en el navegador
     return !!this.getToken();

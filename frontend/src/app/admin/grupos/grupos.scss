@@ -1,0 +1,176 @@
+.admin-hero {
+  margin: 0.5rem 0 1.5rem;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--secondary-dark);
+}
+
+h1 {
+  margin: 0.25rem 0;
+  font-size: clamp(1.8rem, 3.2vw, 2.7rem);
+}
+
+.lead {
+  max-width: 65ch;
+  margin: 0;
+  color: color-mix(in srgb, var(--text-main) 75%, black 25%);
+}
+
+.grupos-card {
+  background: color-mix(in srgb, var(--surface) 72%, white 28%);
+  border: 1px solid color-mix(in srgb, var(--secondary) 40%, #ffffff 60%);
+  border-radius: 18px;
+  box-shadow: 0 16px 40px -30px rgba(30, 45, 32, 0.45);
+  padding: 1rem 1rem 1.25rem;
+}
+
+.grupos-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+
+  h2 {
+    margin: 0;
+    font-size: 1.15rem;
+  }
+}
+
+.nuevo-grupo-form {
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background: rgba(255,255,255,0.5);
+  border-radius: 10px;
+
+  h3 {
+    margin: 0 0 0.5rem;
+    font-size: 0.95rem;
+  }
+}
+
+.form-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.form-input {
+  padding: 0.35rem 0.6rem;
+  border: 1px solid color-mix(in srgb, var(--secondary) 40%, white 60%);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  flex: 1;
+
+  &:focus {
+    outline: 2px solid var(--primary, #3ca06c);
+    outline-offset: 1px;
+  }
+}
+
+.btn-action {
+  padding: 0.35rem 0.9rem;
+  border: none;
+  border-radius: 8px;
+  background: var(--primary, #3ca06c);
+  color: #fff;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: opacity 150ms ease;
+  white-space: nowrap;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &:hover:not(:disabled) {
+    opacity: 0.85;
+  }
+
+  &.btn-sm {
+    padding: 0.25rem 0.6rem;
+    font-size: 0.8rem;
+  }
+
+  &.btn-secondary {
+    background: var(--secondary, #6c757d);
+  }
+
+  &.btn-danger {
+    background: #c0392b;
+  }
+}
+
+.estado-info {
+  color: color-mix(in srgb, var(--text-main) 70%, white 30%);
+  font-size: 0.95rem;
+}
+
+.estado-error {
+  color: #c0392b;
+  font-size: 0.95rem;
+}
+
+.estado-success {
+  color: #27ae60;
+  font-size: 0.95rem;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: 12px;
+}
+
+.grupos-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+
+  thead {
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--tertiary-light) 35%, white 65%) 0%,
+      color-mix(in srgb, var(--primary-light) 30%, white 70%) 100%
+    );
+  }
+
+  th {
+    padding: 0.55rem 0.75rem 0.4rem;
+    text-align: left;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 2px solid color-mix(in srgb, var(--secondary) 30%, white 70%);
+  }
+
+  td {
+    padding: 0.55rem 0.75rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--secondary) 15%, white 85%);
+    vertical-align: middle;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  tbody tr:hover {
+    background: color-mix(in srgb, var(--primary-light, #d4edda) 20%, transparent 80%);
+  }
+}
+
+.acciones {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.sin-resultados {
+  text-align: center;
+  color: color-mix(in srgb, var(--text-main) 60%, white 40%);
+  padding: 1.5rem 0;
+}

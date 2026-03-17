@@ -21,4 +21,20 @@ export class PersonaService {
       map(resp => resp._embedded?.personaList ?? [])
     );
   }
+
+  createPersona(persona: Contacto): Observable<Contacto> {
+    return this.http.post<Contacto>(`${this.base}/personas`, persona);
+  }
+
+  updatePersona(id: number, persona: Contacto): Observable<Contacto> {
+    return this.http.put<Contacto>(`${this.base}/personas/${id}`, persona);
+  }
+
+  deletePersona(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.base}/personas/${id}`);
+  }
+
+  asignarUsuario(personaId: number, usuarioId: number): Observable<Contacto> {
+    return this.http.put<Contacto>(`${this.base}/personas/${personaId}/asignar-usuario/${usuarioId}`, {});
+  }
 }
