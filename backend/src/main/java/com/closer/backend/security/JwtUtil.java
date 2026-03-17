@@ -30,6 +30,10 @@ public class JwtUtil {
         Map<String, Object> claims = new HashMap<>();
         if (userDetails instanceof CustomUserDetails) {
             claims.put("userId", ((CustomUserDetails) userDetails).getId());
+            claims.put("role", userDetails.getAuthorities().stream()
+                    .findFirst()
+                    .map(a -> a.getAuthority())
+                    .orElse("ROLE_LOGGED_USER"));
         }
         return createToken(claims, userDetails.getUsername());
     }

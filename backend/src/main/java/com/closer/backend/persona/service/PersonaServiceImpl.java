@@ -27,6 +27,11 @@ public class PersonaServiceImpl implements PersonaService {
     }
 
     @Override
+    public List<Persona> findAllByGrupoPersonasId(Long grupoPersonasId) {
+        return personaRepository.findByGrupoPersonasId(grupoPersonasId);
+    }
+
+    @Override
     public Persona findById(Long id) {
         return personaRepository.findById(id)
                 .orElseThrow(() -> new PersonaNotFoundException(id));
@@ -46,6 +51,8 @@ public class PersonaServiceImpl implements PersonaService {
         existing.setNumeroTelefono(persona.getNumeroTelefono());
         existing.setFechaCumpleanos(persona.getFechaCumpleanos());
         existing.setEmail(persona.getEmail());
+        existing.setGrupoPersonas(persona.getGrupoPersonas());
+        existing.setUsuario(persona.getUsuario());
         return personaRepository.save(existing);
     }
 

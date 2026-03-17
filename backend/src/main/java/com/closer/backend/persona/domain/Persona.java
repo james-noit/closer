@@ -49,6 +49,10 @@ public class Persona {
     @JoinColumn(name = "usuario_id")
     private com.closer.backend.usuario.domain.Usuario usuario;
 
+    @ManyToOne
+    @JoinColumn(name = "grupo_personas_id")
+    private com.closer.backend.grupoPersonas.domain.GrupoPersonas grupoPersonas;
+
     public Long getId() {
         return id;
     }
@@ -103,5 +107,13 @@ public class Persona {
 
     public void setUsuario(com.closer.backend.usuario.domain.Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public com.closer.backend.grupoPersonas.domain.GrupoPersonas getGrupoPersonas() {
+        return grupoPersonas;
+    }
+
+    public void setGrupoPersonas(com.closer.backend.grupoPersonas.domain.GrupoPersonas grupoPersonas) {
+        this.grupoPersonas = grupoPersonas;
     }
 }

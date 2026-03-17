@@ -9,6 +9,8 @@ public interface PersonaService {
 
     List<Persona> findAllByUsuarioId(Long usuarioId);
 
+    List<Persona> findAllByGrupoPersonasId(Long grupoPersonasId);
+
     Persona findById(Long id);
 
     Persona create(Persona persona);
