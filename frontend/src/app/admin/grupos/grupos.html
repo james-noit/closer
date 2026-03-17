@@ -1,0 +1,88 @@
+<section class="admin-hero">
+  <p class="eyebrow">Administración</p>
+  <h1>Gestión de Grupos</h1>
+  <p class="lead">Crea, edita y elimina los grupos de personas.</p>
+</section>
+
+<section class="grupos-card" aria-label="Gestión de grupos">
+  <header class="grupos-header">
+    <h2>Grupos</h2>
+    <button class="btn-action" (click)="cargarGrupos()" [disabled]="loading()" aria-label="Actualizar lista">
+      Actualizar
+    </button>
+  </header>
+
+  @if (loading()) {
+    <p class="estado-info" role="status">Cargando grupos…</p>
+  }
+
+  @if (errorMsg()) {
+    <p class="estado-error" role="alert">{{ errorMsg() }}</p>
+  }
+
+  @if (successMsg()) {
+    <p class="estado-success" role="status">{{ successMsg() }}</p>
+  }
+
+  <div class="nuevo-grupo-form">
+    <h3>Nuevo grupo</h3>
+    <div class="form-row">
+      <input
+        type="text"
+        class="form-input"
+        placeholder="Nombre del grupo"
+        [(ngModel)]="nuevoNombre"
+        aria-label="Nombre del nuevo grupo"
+      />
+      <button class="btn-action" (click)="crearGrupo()" [disabled]="!nuevoNombre.trim()">
+        Crear
+      </button>
+    </div>
+  </div>
+
+  @if (!loading()) {
+    <div class="table-wrapper">
+      <table class="grupos-table">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (grupo of grupos(); track grupo.id) {
+            <tr>
+              <td>{{ grupo.id }}</td>
+              <td>
+                @if (editandoId === grupo.id) {
+                  <input
+                    type="text"
+                    class="form-input"
+                    [(ngModel)]="editandoNombre"
+                    aria-label="Editar nombre del grupo"
+                  />
+                } @else {
+                  {{ grupo.nombre }}
+                }
+              </td>
+              <td class="acciones">
+                @if (editandoId === grupo.id) {
+                  <button class="btn-action btn-sm" (click)="guardarEdicion(grupo)">Guardar</button>
+                  <button class="btn-action btn-sm btn-secondary" (click)="cancelarEdicion()">Cancelar</button>
+                } @else {
+                  <button class="btn-action btn-sm" (click)="iniciarEdicion(grupo)">Editar</button>
+                  <button class="btn-action btn-sm btn-danger" (click)="eliminarGrupo(grupo.id!)">Eliminar</button>
+                }
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="3" class="sin-resultados">No hay grupos creados.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</section>

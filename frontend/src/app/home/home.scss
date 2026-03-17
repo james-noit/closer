@@ -144,3 +144,145 @@ h1 {
     max-width: 100%;
   }
 }
+
+/* ── Tabs ── */
+.tabs-nav {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  padding: 0.4rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--secondary) 40%, white 60%);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.6);
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: background 150ms, border-color 150ms;
+
+  &.active {
+    background: var(--primary, #3ca06c);
+    color: #fff;
+    border-color: var(--primary, #3ca06c);
+  }
+
+  &:hover:not(.active) {
+    background: color-mix(in srgb, var(--primary-light, #d4edda) 40%, white 60%);
+  }
+}
+
+.tab-panel {
+  animation: fadein 150ms ease;
+}
+
+@keyframes fadein {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── New persona form ── */
+.nueva-persona-form {
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background: rgba(255,255,255,0.5);
+  border-radius: 10px;
+
+  h3 {
+    margin: 0 0 0.5rem;
+    font-size: 0.95rem;
+  }
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.6rem;
+  margin-bottom: 0.75rem;
+}
+
+.form-label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.82rem;
+  font-weight: 600;
+  gap: 0.2rem;
+}
+
+.form-input {
+  padding: 0.35rem 0.6rem;
+  border: 1px solid color-mix(in srgb, var(--secondary) 40%, white 60%);
+  border-radius: 6px;
+  font-size: 0.9rem;
+
+  &:focus {
+    outline: 2px solid var(--primary, #3ca06c);
+    outline-offset: 1px;
+  }
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* ── Buttons ── */
+.btn-action {
+  padding: 0.35rem 0.9rem;
+  border: none;
+  border-radius: 8px;
+  background: var(--primary, #3ca06c);
+  color: #fff;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: opacity 150ms ease;
+  white-space: nowrap;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &:hover:not(:disabled) {
+    opacity: 0.85;
+  }
+
+  &.btn-sm {
+    padding: 0.25rem 0.6rem;
+    font-size: 0.8rem;
+  }
+
+  &.btn-secondary {
+    background: var(--secondary, #6c757d);
+  }
+
+  &.btn-danger {
+    background: #c0392b;
+  }
+}
+
+/* ── Group select ── */
+.grupo-select {
+  padding: 0.25rem 0.4rem;
+  border: 1px solid color-mix(in srgb, var(--secondary) 40%, white 60%);
+  border-radius: 6px;
+  font-size: 0.82rem;
+  background: rgba(255,255,255,0.75);
+
+  &:focus {
+    outline: 2px solid var(--primary, #3ca06c);
+    outline-offset: 1px;
+  }
+}
+
+/* ── Actions cell ── */
+.acciones {
+  white-space: nowrap;
+}
+
+/* ── Estado messages ── */
+.estado-success {
+  color: #27ae60;
+  font-size: 0.95rem;
+}

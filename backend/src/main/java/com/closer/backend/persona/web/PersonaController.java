@@ -87,12 +87,30 @@ public class PersonaController {
     public ResponseEntity<EntityModel<Persona>> update(@PathVariable Long id, @Valid @RequestBody Persona persona) {
         Persona existing = personaService.findById(id);
         assertCanAccessPersona(existing);
-        // ignore any usuario field from request
+        com.closer.backend.usuario.domain.Usuario existingUsuario = existing.getUsuario();
         existing.setNombre(persona.getNombre());
         existing.setApellidos(persona.getApellidos());
         existing.setNumeroTelefono(persona.getNumeroTelefono());
         existing.setFechaCumpleanos(persona.getFechaCumpleanos());
         existing.setEmail(persona.getEmail());
+        existing.setGrupoPersonas(persona.getGrupoPersonas());
+        // only admin can reassign usuario
+        if (isAdmin() && persona.getUsuario() != null && persona.getUsuario().getId() != null) {
+            existing.setUsuario(persona.getUsuario());
+        } else {
+            existing.setUsuario(existingUsuario);
+        }
+        Persona updated = personaService.update(id, existing);
+        return ResponseEntity.ok(personaModelAssembler.toModel(updated));
+    }
+
+    @PutMapping("/{id}/asignar-usuario/{usuarioId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<EntityModel<Persona>> asignarUsuario(@PathVariable Long id, @PathVariable Long usuarioId) {
+        Persona existing = personaService.findById(id);
+        com.closer.backend.usuario.domain.Usuario u = new com.closer.backend.usuario.domain.Usuario();
+        u.setId(usuarioId);
+        existing.setUsuario(u);
         Persona updated = personaService.update(id, existing);
         return ResponseEntity.ok(personaModelAssembler.toModel(updated));
     }

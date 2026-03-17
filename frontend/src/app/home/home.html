@@ -5,99 +5,163 @@
 </section>
 
 <section class="personas-card" aria-label="Lista de personas">
-  <header class="personas-header">
-    <h2>Personas</h2>
-    <button class="btn-refresh" (click)="cargarPersonas()" [disabled]="loading()" aria-label="Actualizar lista">
-      Actualizar
-    </button>
-  </header>
-
   @if (loading()) {
-    <p class="estado-info" role="status">Cargando personas…</p>
+    <p class="estado-info" role="status">Cargando…</p>
   }
 
   @if (errorMsg()) {
     <p class="estado-error" role="alert">{{ errorMsg() }}</p>
   }
 
-  @if (!loading() && !errorMsg()) {
-    <div class="table-wrapper">
-      <table class="personas-table">
-        <thead>
-          <tr>
-            <th scope="col">
-              Nombre
-              <input
-                type="text"
-                class="col-filter"
-                placeholder="Filtrar…"
-                [ngModel]="filtroNombre()"
-                (ngModelChange)="filtroNombre.set($event)"
-                aria-label="Filtrar por nombre"
-              />
-            </th>
-            <th scope="col">
-              Apellidos
-              <input
-                type="text"
-                class="col-filter"
-                placeholder="Filtrar…"
-                [ngModel]="filtroApellidos()"
-                (ngModelChange)="filtroApellidos.set($event)"
-                aria-label="Filtrar por apellidos"
-              />
-            </th>
-            <th scope="col">
-              Teléfono
-              <input
-                type="text"
-                class="col-filter"
-                placeholder="Filtrar…"
-                [ngModel]="filtroTelefono()"
-                (ngModelChange)="filtroTelefono.set($event)"
-                aria-label="Filtrar por teléfono"
-              />
-            </th>
-            <th scope="col">
-              Cumpleaños
-              <input
-                type="text"
-                class="col-filter"
-                placeholder="Filtrar…"
-                [ngModel]="filtroCumpleanos()"
-                (ngModelChange)="filtroCumpleanos.set($event)"
-                aria-label="Filtrar por cumpleaños"
-              />
-            </th>
-            <th scope="col">
-              Email
-              <input
-                type="text"
-                class="col-filter"
-                placeholder="Filtrar…"
-                [ngModel]="filtroEmail()"
-                (ngModelChange)="filtroEmail.set($event)"
-                aria-label="Filtrar por email"
-              />
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (persona of personasFiltradas(); track persona.id) {
-            <tr>
-              <td>{{ persona.nombre }}</td>
-              <td>{{ persona.apellidos }}</td>
-              <td>{{ persona.numeroTelefono }}</td>
-              <td>{{ persona.fechaCumpleanos }}</td>
-              <td>{{ persona.email ?? '—' }}</td>
-            </tr>
-          } @empty {
-            <tr>
-              <td colspan="5" class="sin-resultados">Sin resultados.</td>
-            </tr>
-          }
-        </tbody>
-      </table>
+  @if (successMsg()) {
+    <p class="estado-success" role="status">{{ successMsg() }}</p>
+  }
+
+  @if (!loading()) {
+    <!-- Group tabs -->
+    <div class="tabs-nav" role="tablist">
+      @for (grupo of grupos(); track grupo.id) {
+        <button
+          role="tab"
+          class="tab-btn"
+          [class.active]="tabActivo() === grupo.id"
+          (click)="seleccionarTab(grupo.id!)"
+          [attr.aria-selected]="tabActivo() === grupo.id"
+        >
+          {{ grupo.nombre }}
+        </button>
+      }
     </div>
+
+    <!-- Tab panel -->
+    @if (tabActivo() !== null) {
+      <div class="tab-panel" role="tabpanel">
+        <header class="personas-header">
+          <h2>{{ grupoActivo()?.nombre ?? '' }}</h2>
+          <button class="btn-action" (click)="toggleFormNuevaPersona()" aria-label="Crear nueva persona">
+            {{ mostrarFormNuevaPersona ? 'Cancelar' : '+ Nueva persona' }}
+          </button>
+        </header>
+
+        <!-- New persona form -->
+        @if (mostrarFormNuevaPersona) {
+          <div class="nueva-persona-form">
+            <h3>Nueva persona</h3>
+            <div class="form-grid">
+              <label class="form-label">
+                Nombre *
+                <input type="text" class="form-input" [(ngModel)]="nuevaPersona.nombre" placeholder="Nombre" />
+              </label>
+              <label class="form-label">
+                Apellidos *
+                <input type="text" class="form-input" [(ngModel)]="nuevaPersona.apellidos" placeholder="Apellidos" />
+              </label>
+              <label class="form-label">
+                Teléfono *
+                <input type="text" class="form-input" [(ngModel)]="nuevaPersona.numeroTelefono" placeholder="+34600000000" />
+              </label>
+              <label class="form-label">
+                Cumpleaños *
+                <input type="date" class="form-input" [(ngModel)]="nuevaPersona.fechaCumpleanos" />
+              </label>
+              <label class="form-label">
+                Email
+                <input type="email" class="form-input" [(ngModel)]="nuevaPersona.email" placeholder="email@ejemplo.com" />
+              </label>
+              <label class="form-label">
+                Grupo
+                <select class="form-input" [(ngModel)]="nuevaPersona.grupoPersonasId">
+                  <option [ngValue]="null">Sin grupo</option>
+                  @for (grupo of grupos(); track grupo.id) {
+                    <option [ngValue]="grupo.id">{{ grupo.nombre }}</option>
+                  }
+                </select>
+              </label>
+            </div>
+            <div class="form-actions">
+              <button class="btn-action" (click)="guardarNuevaPersona()" [disabled]="guardandoPersona">
+                {{ guardandoPersona ? 'Guardando…' : 'Guardar' }}
+              </button>
+              <button class="btn-action btn-secondary" (click)="toggleFormNuevaPersona()">Cancelar</button>
+            </div>
+          </div>
+        }
+
+        <!-- Personas table -->
+        <div class="table-wrapper">
+          <table class="personas-table">
+            <thead>
+              <tr>
+                <th scope="col">
+                  Nombre
+                  <input type="text" class="col-filter" placeholder="Filtrar…"
+                    [ngModel]="filtroNombre()" (ngModelChange)="filtroNombre.set($event)"
+                    aria-label="Filtrar por nombre" />
+                </th>
+                <th scope="col">
+                  Apellidos
+                  <input type="text" class="col-filter" placeholder="Filtrar…"
+                    [ngModel]="filtroApellidos()" (ngModelChange)="filtroApellidos.set($event)"
+                    aria-label="Filtrar por apellidos" />
+                </th>
+                <th scope="col">
+                  Teléfono
+                  <input type="text" class="col-filter" placeholder="Filtrar…"
+                    [ngModel]="filtroTelefono()" (ngModelChange)="filtroTelefono.set($event)"
+                    aria-label="Filtrar por teléfono" />
+                </th>
+                <th scope="col">
+                  Cumpleaños
+                  <input type="text" class="col-filter" placeholder="Filtrar…"
+                    [ngModel]="filtroCumpleanos()" (ngModelChange)="filtroCumpleanos.set($event)"
+                    aria-label="Filtrar por cumpleaños" />
+                </th>
+                <th scope="col">
+                  Email
+                  <input type="text" class="col-filter" placeholder="Filtrar…"
+                    [ngModel]="filtroEmail()" (ngModelChange)="filtroEmail.set($event)"
+                    aria-label="Filtrar por email" />
+                </th>
+                <th scope="col">Grupo</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (persona of personasDelTabActivo(); track persona.id) {
+                <tr>
+                  <td>{{ persona.nombre }}</td>
+                  <td>{{ persona.apellidos }}</td>
+                  <td>{{ persona.numeroTelefono }}</td>
+                  <td>{{ persona.fechaCumpleanos }}</td>
+                  <td>{{ persona.email ?? '—' }}</td>
+                  <td>
+                    <select
+                      class="grupo-select"
+                      [ngModel]="persona.grupoPersonas?.id ?? ''"
+                      (ngModelChange)="cambiarGrupo(persona, $event)"
+                      aria-label="Cambiar grupo"
+                    >
+                      <option value="">Sin grupo</option>
+                      @for (grupo of grupos(); track grupo.id) {
+                        <option [value]="grupo.id">{{ grupo.nombre }}</option>
+                      }
+                    </select>
+                  </td>
+                  <td class="acciones">
+                    <button class="btn-action btn-sm btn-danger" (click)="eliminarPersona(persona.id!)" aria-label="Eliminar persona">
+                      Eliminar
+                    </button>
+                  </td>
+                </tr>
+              } @empty {
+                <tr>
+                  <td colspan="7" class="sin-resultados">Sin resultados en este grupo.</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    }
   }
 </section>

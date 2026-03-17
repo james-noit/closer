@@ -1,5 +1,6 @@
 package com.closer.backend.core.exception;
 
+import com.closer.backend.grupoPersonas.web.GrupoPersonasNotFoundException;
 import com.closer.backend.persona.web.PersonaNotFoundException;
 import com.closer.backend.security.AccountLockedException;
 import com.closer.backend.security.TooManyLoginRequestsException;
@@ -28,6 +29,16 @@ public class GlobalApiExceptionHandler {
 
     ProblemDetail detail = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
     detail.setTitle("Persona no encontrada");
+    detail.setDetail(ex.getMessage());
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(detail);
+  }
+
+  @ExceptionHandler(GrupoPersonasNotFoundException.class)
+  public ResponseEntity<ProblemDetail> handleGrupoPersonasNotFound(GrupoPersonasNotFoundException ex) {
+    LOGGER.warn("Recurso no encontrado", ex);
+
+    ProblemDetail detail = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
+    detail.setTitle("Grupo de personas no encontrado");
     detail.setDetail(ex.getMessage());
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(detail);
   }

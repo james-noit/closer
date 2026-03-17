@@ -18,13 +18,18 @@ export class Header {
   loggedIn = false;
   showNavItems = true;
   isMenuOpen = false;
+  isAdmin = false;
 
   constructor(private auth: AuthService, private router: Router) {
     this.loggedIn = auth.isLoggedIn();
+    this.isAdmin = auth.isAdmin();
     auth
       .getLoggedIn$()
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(val => (this.loggedIn = val));
+      .subscribe(val => {
+        this.loggedIn = val;
+        this.isAdmin = auth.isAdmin();
+      });
 
     this.showNavItems = this.shouldShowNavItems(this.router.url);
 
